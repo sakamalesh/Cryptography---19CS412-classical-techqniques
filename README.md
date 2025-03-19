@@ -132,11 +132,11 @@ To decrypt, use the INVERSE (opposite) of the last 3 rules, and the 1st as-is (d
 ## PROGRAM:
 '''
 
-            #include <stdio.h>
+           #include <stdio.h>
             #include <string.h>
             #include <ctype.h>
             
-            #define SIZE 30
+            #define SIZE 100
             
             void formatText(char text[]) {
                 int i, j = 0;
@@ -147,15 +147,28 @@ To decrypt, use the INVERSE (opposite) of the last 3 rules, and the 1st as-is (d
             
             void generateKeyTable(char key[], char keyT[5][5]) {
                 int used[26] = {0}, i, j, k = 0;
-                for (i = 0; i < 5; i++)
-                    for (j = 0; j < 5; j++) {
-                        while (key[k] && used[key[k] - 'a']) k++;
-                        keyT[i][j] = key[k] ? key[k++] : (used[k] || k == 'j' - 'a' ? ++k, k + 'a' : k + 'a');
-                        used[keyT[i][j] - 'a'] = 1;
+                used['j' - 'a'] = 1; // Treat 'J' as 'I'
+            
+                for (i = 0; key[i]; i++) {
+                    if (!used[key[i] - 'a']) {
+                        keyT[k / 5][k % 5] = key[i];
+                        used[key[i] - 'a'] = 1;
+                        k++;
                     }
+                }
+            
+                for (i = 0; i < 26; i++) {
+                    if (!used[i]) {
+                        keyT[k / 5][k % 5] = i + 'a';
+                        k++;
+                    }
+                }
             }
             
             void findPositions(char keyT[5][5], char a, char b, int pos[]) {
+                if (a == 'j') a = 'i';
+                if (b == 'j') b = 'i';
+            
                 for (int i = 0; i < 5; i++)
                     for (int j = 0; j < 5; j++)
                         if (keyT[i][j] == a) pos[0] = i, pos[1] = j;
@@ -174,7 +187,13 @@ To decrypt, use the INVERSE (opposite) of the last 3 rules, and the 1st as-is (d
             }
             
             int main() {
-                char key[] = "monarchy", text[] = "instruments", keyT[5][5];
+                char key[SIZE], text[SIZE], keyT[5][5];
+            
+                printf("Enter key (no spaces, lowercase): ");
+                scanf("%s", key);
+                
+                printf("Enter plaintext (no spaces, lowercase): ");
+                scanf("%s", text);
             
                 formatText(text);
                 if (strlen(text) % 2 != 0) strcat(text, "x"); // Append 'X' if odd length
@@ -184,7 +203,8 @@ To decrypt, use the INVERSE (opposite) of the last 3 rules, and the 1st as-is (d
             
                 printf("Encrypted: %s\n", text);
                 return 0;
-            }
+}
+
 '''
 
 ## OUTPUT:
