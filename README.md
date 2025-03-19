@@ -208,8 +208,8 @@ To decrypt, use the INVERSE (opposite) of the last 3 rules, and the 1st as-is (d
 '''
 
 ## OUTPUT:
-Output:
-Key text: Monarchy Plain text: instruments Cipher text: gatlmzclrqtx
+![image](https://github.com/user-attachments/assets/c65b2f91-101a-446c-b693-ae62f1ae540e)
+
 
 ## RESULT:
 The program is executed successfully
@@ -247,7 +247,7 @@ The cipher can, be adapted to an alphabet with any number of letters. All arithm
 
 '''
 
-        #include <stdio.h>
+       #include <stdio.h>
         #include <string.h>
         
         #define SIZE 2 
@@ -262,7 +262,7 @@ The cipher can, be adapted to an alphabet with any number of letters. All arithm
                 cipher[i] = 0;
                 for (j = 0; j < SIZE; j++)
                     cipher[i] += key[i][j] * textVector[j];
-                cipher[i] %= 26; // Mod 26 to keep within A-Z range
+                cipher[i] %= 26;  
                 encryptedText[i] = cipher[i] + 'A';
             }
             encryptedText[SIZE] = '\0';
@@ -271,24 +271,28 @@ The cipher can, be adapted to an alphabet with any number of letters. All arithm
         }
         
         int main() {
-            int key[SIZE][SIZE] = { {3, 3}, {2, 5} }; 
-            char plaintext[SIZE + 1] = "HI"; 
+            int key[SIZE][SIZE];
+            char plaintext[SIZE + 1];
         
-            printf("Plaintext: %s\n", plaintext);
+            printf("Enter a 2-letter plaintext (UPPERCASE): ");
+            scanf("%s", plaintext);
+        
+            printf("Enter 2x2 key matrix (4 numbers): ");
+            for (int i = 0; i < SIZE; i++)
+                for (int j = 0; j < SIZE; j++)
+                    scanf("%d", &key[i][j]);
+        
             encrypt(plaintext, key);
         
             return 0;
         }
+
 '''
 
 
 ## OUTPUT:
-OUTPUT:
-Simulating Hill Cipher
+![image](https://github.com/user-attachments/assets/239f5415-39e4-4610-84f4-301d7f108259)
 
-
-Input Message : SecurityLaboratory
-Padded Message : SECURITYLABORATORY Encrypted Message : EACSDKLCAEFQDUKSXU Decrypted Message : SECURITYLABORATORY
 ## RESULT:
 The program is executed successfully
 
@@ -349,13 +353,8 @@ The Vigenere cipher is a method of encrypting alphabetic text by using a series 
 '''
 
 ## OUTPUT:
-OUTPUT :
+![image](https://github.com/user-attachments/assets/19fe5bef-5497-409d-a29a-df095b18a0ce)
 
-Simulating Vigenere Cipher
-
-
-Input Message : SecurityLaboratory
-Encrypted Message : NMIYEMKCNIQVVROWXC Decrypted Message : SECURITYLABORATORY
 ## RESULT:
 The program is executed successfully
 
